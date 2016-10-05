@@ -48,7 +48,7 @@ public abstract class JDBCPooledBackend {
         ds = new HikariDataSource(config);
     }
 
-        public JDBCPooledBackend() throws IOException {
+    public JDBCPooledBackend() {
 
         String dataSourceClassName = System.getProperty("dataSourceClassName");
         String dataSourceUser = System.getProperty("dataSourceUser");
@@ -56,19 +56,27 @@ public abstract class JDBCPooledBackend {
         String dataSourceDatabaseName = System.getProperty("dataSourceDatabaseName");
         String dataSourcePortNumber = System.getProperty("dataSourcePortNumber");
         String dataSourceServerName = System.getProperty("dataSourceServerName");
+        String dataSourceUrl = System.getProperty("dataSourceUrl");
 
-        boolean autoCommit = Boolean.parseBoolean( System.getProperty("autoCommit") );
+       /* boolean autoCommit = Boolean.parseBoolean( System.getProperty("autoCommit") );
         int maxPoolSize = Integer.parseInt( System.getProperty("maximumPoolSize") );
         int idleTimeout = Integer.parseInt( System.getProperty("idleTimeout") );
         int connectionTimeout = Integer.parseInt( System.getProperty("connectionTimeout") );
         int maxLifetime = Integer.parseInt( System.getProperty("maxLifetime") );
-
+            */
         HikariConfig config = new HikariConfig();
-        config.setAutoCommit(autoCommit);
-        config.setMaximumPoolSize(maxPoolSize);
-        config.setIdleTimeout(idleTimeout);
-        config.setConnectionTimeout(connectionTimeout);
-        config.setMaxLifetime(maxLifetime);
+
+        config.setDataSourceClassName(dataSourceClassName);
+       /* config.setUsername(dataSourceUser);
+        config.setPassword(dataSourcePassword);*/
+        config.addDataSourceProperty("url", dataSourceUrl);
+
+        //config.setAutoCommit(autoCommit);
+        config.setMaximumPoolSize(1);
+      //  config.setIdleTimeout(idleTimeout);
+        config.setMaximumPoolSize(2);
+        // config.setConnectionTimeout(connectionTimeout);
+        //config.setMaxLifetime(maxLifetime);
 
         ds = new HikariDataSource(config);
     }
@@ -85,6 +93,7 @@ public abstract class JDBCPooledBackend {
     }    // Attempt to get connection
 
     protected BackendResultSet readQueryHelper(Object query, Map<String, Object> values){
+
         String queryToRun = BackendUtil.buildSQLQuery(query , values);
 
         Connection conn = getPoolConnection();
@@ -94,6 +103,7 @@ public abstract class JDBCPooledBackend {
             Statement stmt = null;
             try{
                 stmt = conn.createStatement();
+                logger.info(String.format("Running query: %s", queryToRun));
                 ResultSet rs = stmt.executeQuery(queryToRun);
                 drs = new BackendResultSet(rs, new HashMap<String, Object>());
 
@@ -163,10 +173,10 @@ public abstract class JDBCPooledBackend {
             Statement stmt = null;
             try {
                 // Run query and get the result
-                stmt = conn.prepareStatement(queryToRun);
-                long id = stmt.executeUpdate(queryToRun);
+                stmt = conn.createStatement();
+                logger.info(String.format("Running query: %s    ", queryToRun));
+                stmt.executeUpdate(queryToRun);
 
-                logger.info(String.format("Running query: %s, id: %s", queryToRun, id));
             } catch (SQLException e) {
                 logger.error(e.toString());
             } finally {
@@ -186,4 +196,13 @@ public abstract class JDBCPooledBackend {
         // Return it even if empty. Wrap should handle this case.
         return drs;
     }
+
+    protected BackendResultSet createOrAlterQueryHelper(Object query, Map<String, Object> values) {
+        // Build actual query to run
+        return insertQueryHelper(query, values);
+    }
+
+
+
+
 }

@@ -4,14 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.sql.*;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Represents a PosgreSQL database backend
- * Because of time constraint will defer proper implementation of this
- * layer for later
  */
 public class PostgresBackend extends JDBCPooledBackend implements Backend{
 
@@ -23,6 +19,14 @@ public class PostgresBackend extends JDBCPooledBackend implements Backend{
      */
     public PostgresBackend(String pathToProp) throws IOException {
         super(pathToProp);
+    }
+
+    /**
+     * Constructs a postgres JDBC backend using JVM properties.
+     * @throws IOException
+     */
+    public PostgresBackend() {
+        super();
     }
 
     /**
@@ -66,7 +70,13 @@ public class PostgresBackend extends JDBCPooledBackend implements Backend{
      */
     @Override
     public BackendResultSet delete(Object query, Map<String, Object> values) {
-        return insertQueryHelper(query, values);
+        return super.insertQueryHelper(query, values);
+    }
+
+    @Override
+    public BackendResultSet createOrModify(Object query, Map<String, Object> values) {
+
+        return super.createOrAlterQueryHelper(query, values);
     }
 
 }

@@ -46,6 +46,11 @@ public class MongoBackend implements Backend{
         return null;
     }
 
+    @Override
+    public BackendResultSet createOrModify(Object query, Map<String, Object> values) {
+        return null;
+    }
+
     private BackendResultSet insertHelper(Object query, String collection){
         DBCollection coll = db.getCollection(collection);
         if(query instanceof BasicDBObject){

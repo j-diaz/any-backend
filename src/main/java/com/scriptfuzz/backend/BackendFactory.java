@@ -14,11 +14,24 @@ public class BackendFactory {
      * @return
      */
     public static Backend getBackend(String db, String propPath) throws IOException {
+
         Backend backend = null;
         if("pg".equalsIgnoreCase(db) || "postgres".equalsIgnoreCase(db)){
-            backend = new PostgresBackend(propPath);
+
+            if(propPath == null) {
+                backend = new PostgresBackend();
+            } else {
+                backend = new PostgresBackend(propPath);
+            }
+
         } else if("h2".equalsIgnoreCase(db)){
-            backend = new H2Backend(propPath);
+
+            if(propPath == null) {
+                backend = new H2Backend();
+            } else {
+                backend = new H2Backend(propPath);
+            }
+
         } else if("mongo".equalsIgnoreCase(db)){
             // TODO: Implement mongodb backend
         }else if("casssandra".equalsIgnoreCase(db)){

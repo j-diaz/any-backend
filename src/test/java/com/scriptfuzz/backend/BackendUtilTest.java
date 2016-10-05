@@ -2,7 +2,6 @@ package com.scriptfuzz.backend;
 
 import org.junit.Test;
 
-import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
 

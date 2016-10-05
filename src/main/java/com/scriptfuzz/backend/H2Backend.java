@@ -17,6 +17,10 @@ public class H2Backend extends JDBCPooledBackend implements Backend{
         super(path);
     }
 
+    public H2Backend() {
+        super();
+    }
+
     @Override
     public BackendResultSet read(Object query, Map<String, Object> values) {
 
@@ -25,18 +29,20 @@ public class H2Backend extends JDBCPooledBackend implements Backend{
 
     @Override
     public BackendResultSet insert(Object query, Map<String, Object> values) {
-
         return super.insertQueryHelper(query, values);
     }
 
     @Override
-    public BackendResultSet update(Object query, Map<String, Object> values) {
-        return null;
-    }
+    public BackendResultSet update(Object query, Map<String, Object> values) { return super.updateQueryHelper(query, values);}
 
     @Override
     public BackendResultSet delete(Object query, Map<String, Object> values) {
-        return null;
+        return super.updateQueryHelper(query, values);
+    }
+
+    @Override
+    public BackendResultSet createOrModify(Object query, Map<String, Object> values) {
+        return super.createOrAlterQueryHelper(query, values);
     }
 
 }

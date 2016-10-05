@@ -42,12 +42,12 @@ public class BackendUtil {
             while(rs.next()){
                 BackendResult row = new BackendResult();
 
-                logger.info("backendmetadata: "+columnCount);
+            //    logger.info("backendmetadata: "+columnCount);
                 for(int col = 1; col <= columnCount; col++){
                     Object column = rs.getObject(col);
-                    logger.info("column: "+column);
+                   // logger.info("column: "+column);
                     String label = meta.getColumnLabel(col);
-                    logger.info("label: "+label);
+                   // logger.info("label: "+label);
                     row.put(label, column);
                 }
                 rows.add(row);
