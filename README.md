@@ -5,7 +5,7 @@ A a database abstraction library. Primarily, its a wrapper over JDBC. It uses Hi
 
 ###Example Usage
 
-```
+```java
 import com.scriptfuzz.backend.BackendResult;
 import com.scriptfuzz.backend.BackendResultSet;
 import com.scriptfuzz.backend.PostgresBackend;
@@ -29,7 +29,7 @@ public class Example {
                                 + "id INTEGER NOT NULL IDENTITY PRIMARY KEY, "
                                 + "firstname VARCHAR(100), "
                                 + "lastname VARCHAR(100) "
-                                + ")"
+                                + ")", null
                                 );
                                 
         // Add some data
