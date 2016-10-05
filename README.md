@@ -1,3 +1,5 @@
+![Build Status](https://travis-ci.org/j-diaz/any-backend.svg?branch=master)
+
 Any Backend
 ============
 
