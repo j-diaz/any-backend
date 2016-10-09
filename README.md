@@ -46,7 +46,9 @@ public class Example {
         // Backend result sets are very simillar to JDBC ResultSets.
         // Data found in the values HashMap gets replaced into the query before executing 
         // the query.
-        BackendResultSet brs = postgres.read("SELECT * FROM Person WHERE id = [id] and firstname = '[name]'", values);
+        BackendResultSet brs = postgres.read("SELECT * FROM Person "
+                                            +"WHERE id = [id] and firstname = '[name]'"
+                                            , values);
         
         String lastname = "";
         // Iterate through results
