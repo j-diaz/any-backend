@@ -19,7 +19,7 @@ public class Example {
     private Backend postgres;
     
     public Example(){        
-        // No path needed if file is found in src/main/resources
+        // No path needed if file is found in src/main/resources || classpath
         String pathToProperties = "database.properties"; 
         postgres = new PostgresBackend(pathToProperties);
     }
@@ -35,7 +35,7 @@ public class Example {
                                 );
                                 
         // Add some data
-        postgres.insert("INSERT INTO Person values (1, 'Bob', 'Smith')");                        
+        postgres.insert("INSERT INTO Person values (1, 'Bob', 'Smith')", null);                        
     }
     
     public String fetchLastName() {

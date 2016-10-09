@@ -1,12 +1,16 @@
 package com.scriptfuzz.backend;
 
+import com.scriptfuzz.parser.ValueParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by jdiaz on 8/28/16.
@@ -75,15 +79,13 @@ public class BackendUtil {
     }
 
     private static String createSQLQuery(String q, Map<String, Object> values){
-
-        // TODO: Actually implement this!
-        List<String> valueList = new ArrayList<>();
-        Set<String> s = values.keySet();
-        for(String key: s){
-            valueList.add(key);
+        String newQuery = "";
+        if (values == null) {
+            newQuery = ValueParser.replace(q, new HashMap<String, Object>());
+        } else {
+            newQuery = ValueParser.replace(q, values);
         }
-
-        return q;
+        return newQuery;
     }
 
 }
