@@ -5,7 +5,7 @@ Any Backend
 
 A a database abstraction library. Primarily, its a wrapper over JDBC. It uses HikaryCP for JDBC connection pooling.
 
-###Example Usage
+### Example Usage
 
 ```java
 import com.scriptfuzz.backend.BackendResult;
@@ -69,6 +69,6 @@ public class Example {
 As per the previous example, you don't have to worry about forgetting to close an SQL connection. AnyBackend handles JDBC nuances for us and abstracts away the pain 
 points commonly dealt with working with the JDBC API
 
-###Contributing
+### Contributing
 
 All contributors are welcome. Create a pull request or contact me [@__diaz](https://www.twitter.com/__diaz)
